@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from datetime import datetime 
+import datetime 
 
 #me conecto a la base de datos (en mi caso local)
 client = MongoClient("localhost",27017)
@@ -16,7 +16,7 @@ def agregar_gasto(cantidad,descripcion):
         "descripcion": descripcion
     }
     transactions.insert_one(nueva_transaccion)
-    print("Gasto agregado con éxito.")
+    print("Gasto agregado con éxito.") 
 
 
 #Obtener una lista de todas las transacciones de gastos
@@ -26,12 +26,6 @@ def obtener_gastos():
         gastos.append(t)
     return gastos
 
-#una funcion que haga un recuento de las transacciones del mes
-def gasto_por_mes (mes):
-    gastos = []
-    for t in transactions.find({"fecha":{'$regex': mes}}):
-        gastos.append(t)
-    return gastos
 
 #una vez definidas las funciones y las variables hacemos un menu para interactuar
 sigue = "S"
@@ -58,19 +52,10 @@ while sigue == "S":
             gastos = obtener_gastos()
             for g in gastos:
                 print(g)
-        case 3:
-            print("ingrese un mes con el formato mes/año ej 01/2002")
-            while True:
-                mes_ingresado = int(input("ingrese el mes"))
-                try :
-                    fecha = datetime.strptime(mes_ingresado,"%m/%y")
-                    break #si la entrada es valida sale del bucle
-                except ValueError:
-                    print("Entrada invalida. Por favor, ingrese un formato mes/año ej 01/2002")
-    sigue = input("desea realizar otra operacion ? 's'/'n'").capitalize()
+        
                 
                 
             
-        
+     
         
         
